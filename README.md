@@ -11,7 +11,11 @@
 
 - [Descripción](#🎯-descripción)  
 - [ProcketBase](#pocketbase) 
-- [Python y django](#python-y-django) 
+- [Python y django](#python-y-django)  
+- [Docker](#docker)  
+- [Laravel](#laravel) 
+
+
   
 
 # 🎯 Descripción
@@ -90,4 +94,160 @@ Al igual que se debe de hacer un `.gitignore` y agregar la carpeta del entorno v
 ```bash
 env/ 
 db.sqlite3 
-```
+``` 
+ 
+# Docker 
+ 
+Para ver las imagenes que tienes instaladas en tu ordenador ahi que ejecutar el comando: 
+  
+```bash
+docker image list 
+```  
+ 
+- Lo que debe de dar algo como lo siguiente: 
+ 
+```bash
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+debian        latest    5027089adc4c   4 days ago      117MB
+hello-world   latest    d2c94e258dcb   12 months ago   13.3kB 
+```  
+ 
+- Para crear un contenedor de docker se tiene que ejecutar el siguiente comando: 
+ 
+```bash
+docker container create --name debian-test debian
+```  
+💡 NOTA: Tienes que pasarle un nombre y obligatoriamente le tienes que pasar una imagen  
+ 
+- Ver todos lo contenedores que tienes parados 
+```bash
+docker container list --all
+```  
+ 
+- Arrancar un contenedor de docker 
+ 
+```bash
+docker container start name-container
+``` 
+- Para poder crear el contenedor y que bash no te de problemas es importante que la terminal reconozca los comandos y sepa que esta la existencia de un tty. 
+```bash
+docker container create --interactive --tty --name debian-console debian
+```  
+ 
+`STDIN` = interactive <br>
+`tty`  = interfaz de terminal
+ 
+ 
+> [!IMPORTANT]
+> Se le tiene que pasar el nombre de la imagen del contenedor. 
+  
+  
+- Ejemplo de como te puedes montar el contenedor: 
+```bash
+docker start -i debian-console
+```  
+
+```bash
+root@ff56024a869f:/# ls
+bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
+boot  etc  lib   media  opt  root  sbin  sys  usr
+root@ff56024a869f:/# ls --color=auto
+bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
+boot  etc  lib   media  opt  root  sbin  sys  usr
+```   
+ 
+`ls --color=auto`  = Hace que se te acomode la terminal de modo que puedas leerlo mejor. 
+ 
+
+- Para salir de la consola  
+```bash
+root@ff56024a869f:/# exit
+```  
+ 
+🕯️ Pasos para arrancar un contenedor 
+ 
+ 
+`1. docker image pull` <br>
+`2. docker container create` <br>
+`3. docker container start` 
+ 
+- Todos estos comandos pueden ser automatizados por el siguiente comando: 
+```bash
+docker container run --iteractive --tty --name fedora-container fedora
+```  
+ 
+- Versión más corta: 
+
+```bash
+docker container run -it --name fedora-container fedora
+```  
+
+<div class="notecard warning">
+  <p><strong>Advertencia:</strong> Para poder borrar un contendor puedes hacer uso del siguiente comando: </p>
+</div>
+
+```bash 
+docker container remove id o name container 
+```  
+- Versión más corta: 
+```bash
+docker rm id o name container
+```   
+ 
+<div class="notecard warning">
+  <p><strong>Advertencia:</strong> Para poder borrar todos los contenedores parados por alguna razon puedes hacer uso del comando:</p>
+</div>
+ 
+```bash
+docker container prune
+```  
+<div class="notecard warning">
+  <p><strong>Advertencia:</strong> Para poder borrar un contenedor que esta iniciado puedes hacer uso del siguiente comando: </p>
+</div> 
+
+```bash
+docker rm -f id o name container
+```  
+ 
+`Donde f` = significa `force`   
+ 
+- Para ver la imagenes que tienes puedes hacer uso del siguiente comando: 
+```bash
+docker images
+```  
+
+<div class="notecard warning">
+  <p><strong>Advertencia:</strong> Para poder borrar una imagen puedes hacer uso del siguiente comando:</p>
+</div> 
+ 
+```bash
+docker images rm id o name image
+```  
+ 
+- Version mas corta: 
+```bash
+docker rmi  id o name image
+``` 
+ 
+ 
+
+## Laravel 
+  
+- Crear proyecto de Laravel 
+ 
+```bash
+composer create-project laravel/laravel name-proyect 
+``` 
+
+🕯️ Para checar que te esta funcionando php con composer en el proyecto, puedes ejecutar el siguiente comando: 
+```bash
+php artisan
+```  
+  
+Si te salen una serie de comandos quiere decir que esta bien. 
+ 
+- Arrancar el server 
+ 
+```bash
+php artisan serve
+``` 
