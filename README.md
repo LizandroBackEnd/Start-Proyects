@@ -181,10 +181,9 @@ docker container run --iteractive --tty --name fedora-container fedora
 ```bash
 docker container run -it --name fedora-container fedora
 ```  
-
-<div class="notecard warning">
-  <p><strong>Advertencia:</strong> Para poder borrar un contendor puedes hacer uso del siguiente comando: </p>
-</div>
+ 
+> [!WARNING]
+> Para poder borrar un contendor puedes hacer uso del siguiente comando: 
 
 ```bash 
 docker container remove id o name container 
@@ -193,17 +192,16 @@ docker container remove id o name container
 ```bash
 docker rm id o name container
 ```   
- 
-<div class="notecard warning">
-  <p><strong>Advertencia:</strong> Para poder borrar todos los contenedores parados por alguna razon puedes hacer uso del comando:</p>
-</div>
- 
+
+> [!WARNING]
+> Para poder borrar todos los contenedores parados por alguna razon puedes hacer uso del comando: 
+
 ```bash
 docker container prune
 ```  
-<div class="notecard warning">
-  <p><strong>Advertencia:</strong> Para poder borrar un contenedor que esta iniciado puedes hacer uso del siguiente comando: </p>
-</div> 
+ 
+> [!WARNING]
+> Para poder borrar un contenedor que esta iniciado puedes hacer uso del siguiente comando:  
 
 ```bash
 docker rm -f id o name container
@@ -216,9 +214,10 @@ docker rm -f id o name container
 docker images
 ```  
 
-<div class="notecard warning">
-  <p><strong>Advertencia:</strong> Para poder borrar una imagen puedes hacer uso del siguiente comando:</p>
-</div> 
+ 
+> [!WARNING]
+> Para poder borrar una imagen puedes hacer uso del siguiente comando:   
+
  
 ```bash
 docker images rm id o name image
