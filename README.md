@@ -96,7 +96,13 @@ env/
 db.sqlite3 
 ``` 
  
-# Docker 
+# Docker  
+ 
+Para poder descargar una imagen debes de hacer uso del siguiente comando:  
+
+```bash
+docker pull name_image
+```
  
 Para ver las imagenes que tienes instaladas en tu ordenador ahi que ejecutar el comando: 
   
@@ -227,8 +233,47 @@ docker images rm id o name image
 ```bash
 docker rmi  id o name image
 ``` 
+  
+   
+- Para poner en marcha un archivo de Dockerfile con tu configuracion puesta, debes de hacer uso del siguiente comando:  
  
+Version larga
+```bash
+docker image build --tag codeverse/node:0.1.0 ./
+```  
  
+Version corta
+```bash
+docker build --tag codeverse/node:0.1.0 ./
+```  
+ 
+Creacion de puertos en docker para hacer la publicacion de redes: 
+```bash
+docker run -it --name node_app_v3 -p 5000:3000 codeverse/node:0.1.0
+```   
+ 
+El comando:  
+Elimina 
+- Todas los contenedores parados 
+- Elimina redes que no estan haciendo usadas por contenedores 
+- Todas las imagenes dangling  
+- Todo el cache de los dockerfile 
+
+```bash
+docker system prune
+```   
+ 
+Eliminar todas las imagenes  
+```bash
+docker rmi $(docker images -q)
+```
+El comando docker build --tag codeverse/node:preconfig ./ se utiliza para construir una imagen Docker a partir de un Dockerfile.  
+
+docker build: Este es el comando principal que le dice a Docker que construya una nueva imagen a partir de las instrucciones proporcionadas en el Dockerfile.
+
+--tag codeverse/node:preconfig: La opción --tag (o -t en su forma corta) se utiliza para nombrar y opcionalmente etiquetar la imagen con un formato nombre:etiqueta. En este caso, codeverse/node es el nombre de la imagen, y preconfig es la etiqueta de la imagen. Las etiquetas permiten tener diferentes versiones de la misma imagen.
+
+./: Este es el contexto de construcción. En Docker, el contexto de construcción es el conjunto de archivos y directorios que Docker tiene permitido acceder y usar durante el proceso de construcción de la imagen. ./ indica que el contexto de construcción es el directorio actual, lo que significa que Docker buscará el Dockerfile en el directorio actual y usará los archivos y directorios dentro de este para construir la imagen.
 
 ## Laravel 
   
@@ -249,4 +294,5 @@ Si te salen una serie de comandos quiere decir que esta bien.
  
 ```bash
 php artisan serve
-``` 
+```  
+ 
