@@ -22,7 +22,7 @@
 
 Documentación para poder hacer una buena estructura de proyectos BackEnd, así como el uso de los comandos correctos para crear un proyecto en los diferentes sistemas operativos.
 
-# PocketBase   
+# 🦫 PocketBase   
 
 <h3> Start proyect Windows </h3> 
  
@@ -48,7 +48,7 @@ Lo cual te debe de arrojar algo como lo siguiente
 `Admin UI` Esta es la dirección donde se encuentra el panel de administración, un panel que te proporciona PocketBase
  
 
-# Python y Django  
+# 🐍🎸 Python y Django  
 
 <h3> Start proyect Windows </h3>  
  
@@ -96,19 +96,29 @@ env/
 db.sqlite3 
 ``` 
  
-# Docker  
+# 🐳 Docker   
+### 🕯️ Pasos para arrancar un contenedor 
  
-Para poder descargar una imagen debes de hacer uso del siguiente comando:  
+`1. docker image pull` <br>
+`2. docker container create` <br>
+`3. docker container start`
+ 
+### Para poder descargar una imagen debes de hacer uso del siguiente comando:  
 
 ```bash
 docker pull name_image
-```
+``` 
  
-Para ver las imagenes que tienes instaladas en tu ordenador ahi que ejecutar el comando: 
+### Para ver las imagenes que tienes instaladas en tu ordenador ahi que ejecutar el comando: 
   
 ```bash
 docker image list 
 ```  
+
+- Versión más corta: 
+```bash
+docker images
+```
  
 - Lo que debe de dar algo como lo siguiente: 
  
@@ -118,27 +128,43 @@ debian        latest    5027089adc4c   4 days ago      117MB
 hello-world   latest    d2c94e258dcb   12 months ago   13.3kB 
 ```  
  
-- Para crear un contenedor de docker se tiene que ejecutar el siguiente comando: 
+### Para crear un contenedor de docker se tiene que ejecutar el siguiente comando: 
  
 ```bash
 docker container create --name debian-test debian
 ```  
-💡 NOTA: Tienes que pasarle un nombre y obligatoriamente le tienes que pasar una imagen  
+💡 `NOTA`: Tienes que pasarle un nombre y obligatoriamente le tienes que pasar una imagen  
  
-- Ver todos lo contenedores que tienes parados 
+### Ver todos lo contenedores que tienes parados 
 ```bash
 docker container list --all
-```  
+```   
+- Versión más corta: 
+```bash
+docker ps -a
+```
  
-- Arrancar un contenedor de docker 
+### Arrancar un contenedor de docker 
  
 ```bash
 docker container start name-container
 ``` 
-- Para poder crear el contenedor y que bash no te de problemas es importante que la terminal reconozca los comandos y sepa que esta la existencia de un tty. 
+ 
+### Para poder crear el contenedor y que bash no te de problemas es importante que la terminal reconozca los comandos y sepa que esta la existencia de un tty 
+
 ```bash
 docker container create --interactive --tty --name debian-console debian
 ```  
+- Para que el contenedor se arranque sin hacer uso de `docker start`, puedes hacer uso de: 
+ 
+```bash
+docker run --interactive --tty --name debian-console debian
+``` 
+ 
+- Versión más corta: 
+```bash
+docker run -it --name debian-console debian
+```
  
 `STDIN` = interactive <br>
 `tty`  = interfaz de terminal
@@ -148,7 +174,8 @@ docker container create --interactive --tty --name debian-console debian
 > Se le tiene que pasar el nombre de la imagen del contenedor. 
   
   
-- Ejemplo de como te puedes montar el contenedor: 
+### Ejemplo de como te puedes montar el contenedor existente en modo interactivo:  
+
 ```bash
 docker start -i debian-console
 ```  
@@ -164,20 +191,15 @@ boot  etc  lib   media  opt  root  sbin  sys  usr
  
 `ls --color=auto`  = Hace que se te acomode la terminal de modo que puedas leerlo mejor. 
  
-
 - Para salir de la consola  
 ```bash
 root@ff56024a869f:/# exit
 ```  
  
-🕯️ Pasos para arrancar un contenedor 
  
  
-`1. docker image pull` <br>
-`2. docker container create` <br>
-`3. docker container start` 
- 
-- Todos estos comandos pueden ser automatizados por el siguiente comando: 
+### Para crear un contenedor y que despues de que se haya creado se arranque, puedes hacer uso del siguiente comando: 
+
 ```bash
 docker container run --iteractive --tty --name fedora-container fedora
 ```  
@@ -185,9 +207,38 @@ docker container run --iteractive --tty --name fedora-container fedora
 - Versión más corta: 
 
 ```bash
-docker container run -it --name fedora-container fedora
+docker run -it --name fedora-container fedora
+```  
+
+### Creacion de puertos en docker para hacer la publicacion de redes: 
+```bash
+docker run -it --name node_app_v3 -p 5000:3000 codeverse/node:0.1.0
+``` 
+`p 5000:3000`: Mapea el puerto 5000 del host al puerto 3000 del contenedor. Esto significa que cualquier tráfico que llegue al puerto 5000 de tu máquina host será redirigido al puerto 3000 del contenedor. Esto es comúnmente utilizado para exponer aplicaciones web o servicios que se ejecutan dentro de contenedores a una red más grande o al internet.
+  
+
+## 📦 Dockerfile´s  
+
+### Para construir una imagen y poner en marcha un archivo de Dockerfile con tu configuración puesta, debes de hacer uso del siguiente comando:  
+ 
+```bash
+docker image build --tag codeverse/node:0.1.0 ./
 ```  
  
+- Version corta
+```bash
+docker build -t codeverse/node:0.1.0 ./
+```   
+
+`docker build`: Este es el comando principal que le dice a Docker que construya una nueva imagen a partir de las instrucciones proporcionadas en el Dockerfile.
+
+`--tag codeverse/node:preconfig`: La opción --tag (o -t en su forma corta) se utiliza para nombrar y opcionalmente etiquetar la imagen con un formato nombre:etiqueta. En este caso, codeverse/node es el nombre de la imagen, y preconfig es la etiqueta de la imagen. Las etiquetas permiten tener diferentes versiones de la misma imagen.
+
+`./`: Este es el contexto de construcción. En Docker, el contexto de construcción es el conjunto de archivos y directorios que Docker tiene permitido acceder y usar durante el proceso de construcción de la imagen. ./ indica que el contexto de construcción es el directorio actual, lo que significa que Docker buscará el Dockerfile en el directorio actual y usará los archivos y directorios dentro de este para construir la imagen.
+
+
+## ⚠️ DELETE   
+
 > [!WARNING]
 > Para poder borrar un contendor puedes hacer uso del siguiente comando: 
 
@@ -214,17 +265,11 @@ docker rm -f id o name container
 ```  
  
 `Donde f` = significa `force`   
- 
-- Para ver la imagenes que tienes puedes hacer uso del siguiente comando: 
-```bash
-docker images
-```  
 
- 
+
 > [!WARNING]
 > Para poder borrar una imagen puedes hacer uso del siguiente comando:   
 
- 
 ```bash
 docker images rm id o name image
 ```  
@@ -232,50 +277,28 @@ docker images rm id o name image
 - Version mas corta: 
 ```bash
 docker rmi  id o name image
-``` 
+```  
+ 
+> [!WARNING]
+> El siguiente comando elimina: 
+> - Todas los contenedores parados 
+> - Elimina redes que no estan haciendo usadas por contenedores 
+> - Todas las imagenes dangling  
+> - Todo el cache de los dockerfile  
   
-   
-- Para poner en marcha un archivo de Dockerfile con tu configuracion puesta, debes de hacer uso del siguiente comando:  
- 
-Version larga
-```bash
-docker image build --tag codeverse/node:0.1.0 ./
-```  
- 
-Version corta
-```bash
-docker build --tag codeverse/node:0.1.0 ./
-```  
- 
-Creacion de puertos en docker para hacer la publicacion de redes: 
-```bash
-docker run -it --name node_app_v3 -p 5000:3000 codeverse/node:0.1.0
-```   
- 
-El comando:  
-Elimina 
-- Todas los contenedores parados 
-- Elimina redes que no estan haciendo usadas por contenedores 
-- Todas las imagenes dangling  
-- Todo el cache de los dockerfile 
-
 ```bash
 docker system prune
 ```   
+
+> [!WARNING]
+> Para eliminar todas las imagenes que tengas en tu ordenador, puedes hacer uso del siguiente comando:  
  
-Eliminar todas las imagenes  
 ```bash
 docker rmi $(docker images -q)
 ```
-El comando docker build --tag codeverse/node:preconfig ./ se utiliza para construir una imagen Docker a partir de un Dockerfile.  
 
-docker build: Este es el comando principal que le dice a Docker que construya una nueva imagen a partir de las instrucciones proporcionadas en el Dockerfile.
 
---tag codeverse/node:preconfig: La opción --tag (o -t en su forma corta) se utiliza para nombrar y opcionalmente etiquetar la imagen con un formato nombre:etiqueta. En este caso, codeverse/node es el nombre de la imagen, y preconfig es la etiqueta de la imagen. Las etiquetas permiten tener diferentes versiones de la misma imagen.
-
-./: Este es el contexto de construcción. En Docker, el contexto de construcción es el conjunto de archivos y directorios que Docker tiene permitido acceder y usar durante el proceso de construcción de la imagen. ./ indica que el contexto de construcción es el directorio actual, lo que significa que Docker buscará el Dockerfile en el directorio actual y usará los archivos y directorios dentro de este para construir la imagen.
-
-## Laravel 
+## 🚀 Laravel 
   
 - Crear proyecto de Laravel 
  
